@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = hairless-midiserial
 TEMPLATE = app
@@ -47,7 +48,7 @@ macx {
 # Static flags for windows
 
 win32 {
-  QMAKE_LFLAGS += -static -static-libgcc
+  QMAKE_LFLAGS += -static -static-libgcc -static-libstdc++
 }
 
 # Icon stuff
@@ -78,7 +79,7 @@ macx {
 }
 
 win32 {
-  SOURCES          += libraries/qextserialport/src/win_qextserialport.cpp \
+  SOURCES          += libraries/qextserialport/src/qextserialport_win.cpp \
                       libraries/qextserialport/src/qextserialenumerator_win.cpp
   DEFINES          += WINVER=0x0501 # needed for mingw to pull in appropriate dbt business...probably a better way to do this
   LIBS             += -lsetupapi

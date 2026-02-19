@@ -30,7 +30,7 @@ HKEY PortLatency::openFTDIDeviceParameters()
           paramKey = 0;
         }
         DWORD subkey_sz = 140;
-        wchar_t subkey[subkey_sz];
+        wchar_t subkey[140];
         r = RegEnumKeyEx(key, index++, subkey, &subkey_sz, 0, NULL, NULL, NULL);        
         if(r) {
             if(r==ERROR_NO_MORE_ITEMS)
@@ -44,8 +44,8 @@ HKEY PortLatency::openFTDIDeviceParameters()
         if(r) {
             continue;
         }
-        DWORD regPortName_sz = 10;
-        wchar_t regPortName[regPortName_sz];
+        DWORD regPortName_sz = 16;
+        wchar_t regPortName[16];
         DWORD type;
         r = RegQueryValueEx(readOnlyKey, L"PortName", NULL, &type, (LPBYTE)&regPortName, &regPortName_sz);
         if(!r && portName == QString::fromWCharArray(regPortName)) {
