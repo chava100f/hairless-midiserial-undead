@@ -38,11 +38,8 @@ FORMS += src/ui/mainwindow.ui \
 
 INCLUDEPATH += src/
 
-# Universal binary for OS X
-
-macx {
-    CONFIG += ppc x86
-}
+# C++11 required by RtMidi 6.0.0
+CONFIG += c++11
 
 
 # Static flags for windows
@@ -109,12 +106,9 @@ win32 {
 }
 macx {
     DEFINES += __MACOSX_CORE__
-    LIBS += -framework \
-        CoreMidi \
-        -framework \
-        CoreAudio \
-        -framework \
-        CoreFoundation
+    LIBS += -framework CoreMIDI \
+        -framework CoreAudio \
+        -framework CoreFoundation
 }
 
 # PortLatency

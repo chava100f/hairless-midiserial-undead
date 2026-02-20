@@ -2,7 +2,7 @@
 
 This is a **revival fork** of the original [Hairless MIDI<->Serial Bridge](https://github.com/projectgus/hairless-midiserial) by projectgus, which has been archived and is no longer maintained.
 
-The original project stopped working on modern Windows versions. This fork patches it to compile and run on **Windows 10 and 11** using **Qt 5.15** with MinGW.
+The original project stopped working on modern systems. This fork patches it to compile and run on **Windows 10/11** and **macOS** (Monterey 12+) using **Qt 5.15**.
 
 **This is not an actively maintained project** — it's a one-time revival to get it working again on modern systems. No new features are planned. If you find a bug, feel free to open an issue or submit a PR, but there are no guarantees of support.
 
@@ -16,11 +16,11 @@ The original project home page is http://projectgus.github.com/hairless-midiseri
 
 - Ported from Qt 4 to Qt 5 (`QT += widgets`, updated deprecated APIs)
 - Fixed a critical build bug (wrong source filename in the .pro file for Windows serial port)
-- Fixed 64-bit pointer truncation in RtMidi (`DWORD` -> `DWORD_PTR`)
+- Updated RtMidi from 2.1.0 to 6.0.0 (with 64-bit Windows fix)
+- Fixed deprecated IOKit symbols for macOS 12+ (`kIOMasterPortDefault` -> `kIOMainPortDefault`)
+- Removed PowerPC build target, added C++11 support
 - Replaced non-standard variable-length arrays with fixed-size arrays
 - Updated `.gitignore` for modern build artifacts
-
-All underlying Windows APIs (WinMM for MIDI, SetupAPI for serial, overlapped I/O) are unchanged and fully supported on Windows 10/11.
 
 # Building from source
 
@@ -45,11 +45,29 @@ The executable will be at `release/hairless-midiserial.exe`.
 
 Run it from the MSYS2 UCRT64 terminal, or copy the required Qt DLLs next to the exe for standalone use.
 
+## macOS
+
+Install Qt 5 and Xcode command line tools via [Homebrew](https://brew.sh/):
+
+```bash
+brew install qt@5
+export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
+```
+
+Then build:
+
+```bash
+git clone --recursive https://github.com/chava100f/hairless-midiserial-undead.git
+cd hairless-midiserial-undead
+qmake hairless-midiserial.pro
+make
+```
+
 # Libraries
 
 * [qextserialport](https://code.google.com/p/qextserialport/) — linked into the source tree as a git submodule.
 
-* [The RtMidi library](https://github.com/thestk/rtmidi) — linked into the source tree as a git submodule (with a local patch for 64-bit compatibility).
+* [The RtMidi library](https://github.com/thestk/rtmidi) v6.0.0 — linked into the source tree as a git submodule (with a local patch for 64-bit Windows compatibility).
 
 Both libraries are small so they are compiled as source files directly into Hairless Bridge, not linked as separate libraries.
 
