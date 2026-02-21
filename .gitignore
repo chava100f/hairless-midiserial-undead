@@ -7,7 +7,9 @@ qrc_resources.cpp
 moc_predefs.h
 hairless-midiserial
 hairless-midiserial.exe
+hairless-midiserial.app/
 *~
+.DS_Store
 Makefile
 Makefile.Debug
 Makefile.Release
